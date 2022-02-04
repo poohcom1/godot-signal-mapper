@@ -1,6 +1,6 @@
 extends Object
 
-static func parse_scene(filename, node_name) -> Array:
+static func parse_scene(filename) -> Array:
 	var file := File.new()
 	
 	var signals = []
@@ -11,23 +11,48 @@ static func parse_scene(filename, node_name) -> Array:
 	
 	for line in file_content:
 		if line.begins_with("[connection "):
-			var tokens = line.split(" ")
+			var line_trimmed: String = line.substr(10, len(line)-11)
 			
-			var from = get_value(tokens[2])
-			var to = get_value(tokens[3])
+			var sig = {}
 			
-			signals.append({
-				"signal": get_value(tokens[1]),
-				"from": from,
-				"to": to,
-				"method": get_value(tokens[4], -1)
-			})
+			
+			var i = 0
+			var ind = 0
+			while true:
+				var pre_ind = ind
+				ind = line_trimmed.find("=", ind + 1)
+				
+				if ind == -1:
+					break
+					
+				var next_ind = line_trimmed.find("=", ind + 1)
+				var section = line_trimmed.substr(ind + 1, next_ind - ind)
+			
+				var key: String = line_trimmed.substr(pre_ind, ind - pre_ind).split(" ")[1].strip_edges()
+				var value  = section.split(" ")[0].strip_edges()
+				
+				if value == "":
+					value = line_trimmed.substr(ind + 1, len(line_trimmed) - ind)
+				
+				value = value.strip_edges().trim_prefix('"').trim_suffix('"')
+
+				if key == "binds":
+					value = parse_json(value)
+				
+				sig[key] = value
+				
+			
+			var tokens = line.substr(12, len(line)-13).split(" ")
+			
+			signals.append(sig)
 		
 
 	file.close()
 	return signals
 	
-static func get_value(attribute: String, offset=0):
+static func get_value(attribute: String):
 	var tokens := attribute.split("=")
 	
-	return tokens[1].substr(1, len(tokens[1])-2+offset)
+	var word := tokens[1].substr(1, len(tokens[1])-2)
+
+	return word.replace('"', "").replace("]", "")
