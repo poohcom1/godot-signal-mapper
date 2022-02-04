@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[WAT]
+
+Test_Directory="res://"
+Results_Directory="res://"
+Test_Metadata_Directory="res://"
+Tags=PoolStringArray(  )
+Cache_Tests=true
+Window_Size=Vector2( 1280, 720 )
+Minimize_Window_When_Running_Tests=false
+Port=6008
+Display=8
+
+[application]
+
+config/name="godot-signal-mapper"
+run/main_scene="res://addons/signal-mapper/SignalMapperUI.tscn"
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/signal-mapper/plugin.cfg" )
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

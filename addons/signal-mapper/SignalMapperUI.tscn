@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/signal-mapper/SignalMapperUI.gd" type="Script" id=1]
+
+[node name="SignalMapper" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 0.695
+margin_bottom = 583.0
+rect_min_size = Vector2( 500, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 1007.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 1000.0
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+show_behind_parent = true
+margin_right = 1010.0
+margin_bottom = 1000.0
+rect_clip_content = true
+mouse_default_cursor_shape = 3
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GraphEdit" type="GraphEdit" parent="MarginContainer/VBoxContainer/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 1000.0
+scroll_offset = Vector2( -40, -269 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphNode" type="GraphNode" parent="MarginContainer/VBoxContainer/MarginContainer/GraphEdit"]
+margin_left = 40.0
+margin_top = 269.0
+margin_right = 72.0
+margin_bottom = 299.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="connection_request" from="MarginContainer/VBoxContainer/MarginContainer/GraphEdit" to="." method="_on_connection_request"]

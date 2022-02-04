@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+# warning-ignore:unused_signal
+signal test()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+
+func _on_Sprite2_frame_changed():
+	pass # Replace with function body.
+
+
+func _on_Sprite2_signal2():
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Sprite
+
+signal signal2()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_Node2D_test():
+	pass # Replace with function body.
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="Sprite2" type="Sprite" parent="Sprite"]
+script = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="test" from="." to="Sprite/Sprite2" method="_on_Node2D_test"]
+[connection signal="frame_changed" from="Sprite/Sprite2" to="." method="_on_Sprite2_frame_changed"]
+[connection signal="signal2" from="Sprite/Sprite2" to="." method="_on_Sprite2_signal2"]
